@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jom Susun Huruf: Air Dalam Kehidupan 💧🌸</title>
+  <!-- Google Fonts: Fredoka untuk tema Kawaii -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --biru-muda: #CBEBF6;
+      --pink-cair: #FFD4E2;
+      --ungu-cair: #E8D7F9;         /* Warna Ungu Cair Utama (Tiada Putih) */
+      --ungu-cair-gelap: #DAC1F5;   /* Warna Ungu Cair Elemen Dalaman */
+      --ungu-gelap: #4A1E6D;
+      --kuning-terang: #FFE135;
+      --kuning-cerah: #FFF57A;
+      --coklat-gelap: #4A2E18;
+      --hijau-betul: #55EFC4;
+      --hijau-border: #00B894;
+      --oren-salah: #FF9F43;
+      --oren-border: #EE5253;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fredoka', cursive, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--biru-muda) 0%, var(--ungu-cair) 50%, var(--pink-cair) 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      color: var(--coklat-gelap);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Corak Latar Belakang */
+    .bg-deco {
+      position: fixed;
+      font-size: 28px;
+      opacity: 0.4;
+      pointer-events: none;
+      animation: floatSlow 6s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes floatSlow {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-15px) rotate(10deg); }
+    }
+
+    /* Container Utama */
+    .game-container {
+      background: var(--ungu-cair);
+      border: 5px solid #D1B3F2;
+      border-radius: 35px;
+      box-shadow: 0 15px 30px rgba(74, 30, 109, 0.15), 0 0 0 6px var(--pink-cair);
+      width: 100%;
+      max-width: 650px;
+      padding: 25px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header & Progress */
+    .header {
+      margin-bottom: 12px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ungu-gelap);
+      text-shadow: 2px 2px 0px var(--kuning-cerah);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .progress-bar-container {
+      background: var(--ungu-cair-gelap);
+      border-radius: 20px;
+      height: 14px;
+      width: 80%;
+      margin: 10px auto;
+      overflow: hidden;
+      border: 2px solid var(--ungu-gelap);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--kuning-terang), #FFA502);
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: 20px;
+    }
+
+    .level-indicator {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ungu-gelap);
+      background: var(--kuning-cerah);
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 20px;
+      border: 2px dashed var(--ungu-gelap);
+    }
+
+    /* Bingkai Gambar */
+    .image-card {
+      position: relative;
+      margin: 12px auto;
+      width: 185px;
+      height: 155px;
+      border-radius: 25px;
+      background: var(--ungu-cair-gelap);
+      padding: 8px;
+      border: 5px solid var(--kuning-terang);
+      box-shadow: 0 8px 16px rgba(74, 30, 109, 0.12);
+      transform: rotate(-1deg);
+      transition: transform 0.3s ease;
+    }
+
+    .image-card:hover {
+      transform: rotate(1deg) scale(1.02);
+    }
+
+    .target-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+      background-color: var(--ungu-cair-gelap);
+    }
+
+    .hint-subtext {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ungu-gelap);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Kotak Jawapan (Slots) */
+    .slots-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin: 10px 0 16px 0;
+      min-height: 52px;
+    }
+
+    .word-group {
+      display: flex;
+      gap: 5px;
+      margin: 0 4px;
+    }
+
+    .slot {
+      width: 38px;
+      height: 46px;
+      border: 3px dashed #B896E4;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--coklat-gelap);
+      background: #DECAF7;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    /* Gaya Huruf Pembayang Sedia Ada (Mint/Green) */
+    .slot.prefilled {
+      background-color: #A3E4D7 !important;
+      border: 3px solid var(--hijau-border) !important;
+      color: #004D40 !important;
+      box-shadow: 0 2px 6px rgba(0, 184, 148, 0.2);
+    }
+
+    .slot.prefilled::after {
+      content: '✨';
+      position: absolute;
+      top: -8px;
+      right: -6px;
+      font-size: 10px;
+    }
+
+    .slot.correct {
+      background-color: var(--hijau-betul) !important;
+      border: 3px solid var(--hijau-border) !important;
+      color: #005A3C;
+      transform: scale(1.08);
+      box-shadow: 0 4px 10px rgba(0, 184, 148, 0.3);
+      animation: popSuccess 0.4s ease;
+    }
+
+    .slot.wrong {
+      background-color: var(--oren-salah) !important;
+      border: 3px solid var(--oren-border) !important;
+      color: #611313;
+      animation: shake 0.45s ease;
+    }
+
+    .slot.symbol {
+      border: none;
+      background: transparent !important;
+      width: 18px;
+    }
+
+    @keyframes popSuccess {
+      0% { transform: scale(0.8); }
+      70% { transform: scale(1.15); }
+      100% { transform: scale(1.08); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px) rotate(-4deg); }
+      40% { transform: translateX(6px) rotate(4deg); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    /* Serakan Huruf */
+    .letters-pool {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 12px 0 18px 0;
+      padding: 14px;
+      background: var(--pink-cair);
+      border-radius: 24px;
+      border: 3px dotted #FFAAA6;
+      min-height: 68px;
+    }
+
+    .letter-btn {
+      width: 44px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--kuning-terang);
+      border: 2px solid #E5C300;
+      border-bottom: 5px solid #CCA000;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--coklat-gelap);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 8px rgba(74, 30, 109, 0.08);
+    }
+
+    .letter-btn:hover {
+      transform: translateY(-3px);
+      background: var(--kuning-cerah);
+    }
+
+    .letter-btn:active {
+      transform: translateY(2px);
+      border-bottom: 2px solid #CCA000;
+    }
+
+    .letter-btn.disabled {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Butang Aksi */
+    .actions-container {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 5px;
+    }
+
+    .kawaii-btn {
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .hint-btn {
+      background: var(--ungu-gelap);
+      color: var(--kuning-cerah);
+      box-shadow: 0 4px 0 #2A0845;
+    }
+
+    .hint-btn:hover {
+      background: #5D2988;
+      transform: translateY(-2px);
+    }
+
+    .hint-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #2A0845;
+    }
+
+    .reset-btn {
+      background: var(--biru-muda);
+      color: var(--coklat-gelap);
+      border: 2px solid #A2DCE7;
+      box-shadow: 0 4px 0 #86C7D3;
+    }
+
+    .reset-btn:hover {
+      background: #B6E5EE;
+      transform: translateY(-2px);
+    }
+
+    .reset-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #86C7D3;
+    }
+
+    /* Modal Petunjuk */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(74, 30, 109, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      background: var(--ungu-cair);
+      padding: 25px 20px;
+      border-radius: 30px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      border: 5px solid var(--kuning-terang);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transform: scale(0.8);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      color: var(--ungu-gelap);
+      margin-bottom: 12px;
+    }
+
+    .modal-text {
+      font-size: 17px;
+      color: var(--coklat-gelap);
+      line-height: 1.5;
+      background: var(--pink-cair);
+      padding: 15px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      border: 2px dashed #FFAAA6;
+      font-weight: 600;
+    }
+
+    .modal-close-btn {
+      background: var(--ungu-gelap);
+      color: var(--kuning-cerah);
+      border: none;
+      padding: 10px 25px;
+      border-radius: 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Skrin Selesai */
+    .finish-card {
+      display: none;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    .finish-title {
+      font-size: 28px;
+      color: var(--ungu-gelap);
+      margin-bottom: 10px;
+    }
+
+    .star-reward {
+      font-size: 50px;
+      margin: 15px 0;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-12px); }
+    }
+
+    #confettiCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 99;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Corak Latar Belakang -->
+  <div class="bg-deco" style="top: 8%; left: 8%;">💧</div>
+  <div class="bg-deco" style="top: 15%; right: 10%;">🌸</div>
+  <div class="bg-deco" style="bottom: 10%; left: 12%;">⭐</div>
+  <div class="bg-deco" style="bottom: 12%; right: 15%;">☁️</div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="game-container">
+    <!-- Kawasan Permainan -->
+    <div id="playArea">
+      <div class="header">
+        <h1 class="title">💧 Susun Huruf Comel 🌸</h1>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="level-indicator" id="levelIndicator">Perkataan 1 / 9</div>
+      </div>
+
+      <!-- Gambar Perkataan -->
+      <div class="image-card">
+        <img id="wordImage" class="target-image" src="" alt="Gambar Air">
+      </div>
+
+      <div class="hint-subtext">✨ Huruf bantuan hijau sedia ada untuk setiap perkataan!</div>
+
+      <!-- Kotak Huruf Jawapan -->
+      <div class="slots-container" id="slotsContainer"></div>
+
+      <!-- Kotak Huruf Terserak -->
+      <div class="letters-pool" id="lettersPool"></div>
+
+      <!-- Butang Petunjuk & Reset -->
+      <div class="actions-container">
+        <button class="kawaii-btn hint-btn" onclick="showHint()">💡 Petunjuk</button>
+        <button class="kawaii-btn reset-btn" onclick="resetCurrentWord()">🔄 Susun Semula</button>
+      </div>
+    </div>
+
+    <!-- Skrin Selesai -->
+    <div id="finishArea" class="finish-card">
+      <h2 class="finish-title">🎉 TAHNIAH! HEBATNYA! 🎉</h2>
+      <div class="star-reward">⭐⭐⭐</div>
+      <p style="font-size: 18px; margin-bottom: 20px; font-weight: 600;">
+        Adik telah berjaya menyusun kesemua 9 perkataan berkaitan air dalam kehidupan! 💧💖
+      </p>
+      <button class="kawaii-btn hint-btn" style="margin: 0 auto; font-size: 18px; padding: 12px 30px;" onclick="restartGame()">
+        🔁 Main Lagi Sekali
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Petunjuk -->
+  <div class="modal-overlay" id="hintModal">
+    <div class="modal-content">
+      <h3 class="modal-title">💡 Petunjuk Guru</h3>
+      <p class="modal-text" id="hintText">-</p>
+      <button class="modal-close-btn" onclick="closeHint()">Faham, Terima Kasih! ✨</button>
+    </div>
+  </div>
+
+  <script>
+    // Data 9 Perkataan Pilihan KSSR Tahun 1
+    const wordList = [
+      {
+        word: "air hujan",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787456483/photo_6078112717031019238_x.jpg",
+        hint: "Air Hujan: Salah satu daripada 7 jenis air mutlak (suci dan menyucikan)."
+      },
+      {
+        word: "air sungai",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787456455/photo_6078112717031019236_y.jpg",
+        hint: "Air Sungai: Air mutlak yang mengalir dari bukit (suci dan menyucikan)."
+      },
+      {
+        word: "air laut",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787456424/photo_6078112717031019231_y.jpg",
+        hint: "Air Laut: Air masin yang suci dan menyucikan."
+      },
+      {
+        word: "air perigi",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787456471/photo_6078112717031019237_x.jpg",
+        hint: "Air Perigi: Sumber air dari dalam tanah yang suci dan menyucikan."
+      },
+      {
+        word: "air salji",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787456439/photo_6078112717031019235_y.jpg",
+        hint: "Air Salji: Air beku yang turun dari langit (suci dan menyucikan)."
+      },
+      {
+        word: "air embun",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787456504/photo_6078112717031019239_y.jpg",
+        hint: "Air Embun: Titisan air pada daun waktu pagi (suci dan menyucikan)."
+      },
+      {
+        word: "air mata air",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787456409/photo_6078112717031019228_x.jpg",
+        hint: "Air Mata Air: Air jernih yang keluar dari bumi secara semula jadi (suci dan menyucikan)."
+      },
+      {
+        word: "air musyammas",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787456349/photo_6078112717031019244_w.jpg",
+        hint: "Air Musyammas: Suci dan menyucikan (terdedah cahaya matahari dalam bekas logam, makruh guna pada badan bila panas)."
+      },
+      {
+        word: "air muqayyad",
+        img: "https://res.cloudinary.com/skwtcdkw/image/upload/v1787475974/photo_6078112717031019407_w.jpg",
+        hint: "Air Muqayyad: Suci tetapi tidak menyucikan (air mutlak yang telah bercampur benda suci seperti air kopi, teh, sirap)."
+      }
+    ];
+
+    let currentIndex = 0;
+    let currentWordObj = null;
+    let targetSlots = [];
+    let scrambledLetters = [];
+    let isProcessing = false;
+
+    // Web Audio Synthesizer (Tanpa fail audio luar)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playTone(freq, type = 'sine', duration = 0.15) {
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e){}
+    }
+
+    function soundCorrect() {
+      playTone(523.25, 'triangle', 0.1);
+      setTimeout(() => playTone(659.25, 'triangle', 0.15), 100);
+      setTimeout(() => playTone(783.99, 'triangle', 0.25), 200);
+    }
+
+    function soundWrong() {
+      playTone(250, 'sawtooth', 0.15);
+      setTimeout(() => playTone(180, 'sawtooth', 0.25), 120);
+    }
+
+    function soundWin() {
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((n, i) => setTimeout(() => playTone(n, 'triangle', 0.25), i * 140));
+    }
+
+    function initGame() {
+      shuffleArray(wordList);
+      currentIndex = 0;
+      loadWord(currentIndex);
+    }
+
+    function loadWord(index) {
+      if (index >= wordList.length) {
+        showFinishScreen();
+        return;
+      }
+
+      isProcessing = false;
+      currentWordObj = wordList[index];
+
+      document.getElementById("levelIndicator").innerText = `Perkataan ${index + 1} / ${wordList.length}`;
+      document.getElementById("progressBar").style.width = `${((index) / wordList.length) * 100}%`;
+      document.getElementById("wordImage").src = currentWordObj.img;
+
+      const slotsContainer = document.getElementById("slotsContainer");
+      slotsContainer.innerHTML = "";
+      targetSlots = [];
+
+      const rawWord = currentWordObj.word.toLowerCase();
+      const wordsArray = rawWord.split(" ");
+      let remainingLettersForPool = [];
+
+      wordsArray.forEach((subWord) => {
+        const group = document.createElement("div");
+        group.className = "word-group";
+
+        // Tetapkan 2 huruf pembayang sedia ada bagi setiap pecahan perkataan
+        let hintIndices = [];
+        if (subWord.length === 3) {
+          // Contoh "air" -> A (indeks 0) dan R (indeks 2)
+          hintIndices = [0, 2];
+        } else if (subWord.length === 4) {
+          // Contoh "laut", "mata" -> L (indeks 0) dan U (indeks 2)
+          hintIndices = [0, 2];
+        } else if (subWord.length === 5) {
+          // Contoh "hujan", "salji", "embun" -> indeks 0 dan 2
+          hintIndices = [0, 2];
+        } else if (subWord.length === 6) {
+          // Contoh "perigi", "sungai" -> indeks 0 dan 3
+          hintIndices = [0, 3];
+        } else if (subWord.length >= 8) {
+          // Contoh "musyammas", "muqayyad" -> indeks 0 dan 3
+          hintIndices = [0, 3];
+        } else {
+          hintIndices = [0, 1];
+        }
+
+        for (let i = 0; i < subWord.length; i++) {
+          const char = subWord[i];
+          const slotEl = document.createElement("div");
+          slotEl.className = "slot";
+
+          if (char === "'") {
+            slotEl.innerText = "'";
+            slotEl.classList.add("symbol");
+            targetSlots.push({ char: "'", filled: true, isSymbol: true, el: slotEl });
+          } else {
+            // Semak jika slot ini ialah huruf pembayang
+            if (hintIndices.includes(i)) {
+              slotEl.innerText = char.toUpperCase();
+              slotEl.classList.add("prefilled");
+              targetSlots.push({ char: char, filled: true, isSymbol: false, isPrefilled: true, el: slotEl });
+            } else {
+              slotEl.innerText = "";
+              targetSlots.push({ char: char, filled: false, isSymbol: false, isPrefilled: false, el: slotEl });
+              // Hanya huruf yang belum diisi dimasukkan ke dalam serakan
+              remainingLettersForPool.push(char);
+            }
+          }
+          group.appendChild(slotEl);
+        }
+
+        slotsContainer.appendChild(group);
+      });
+
+      generateLetterPool(remainingLettersForPool);
+    }
+
+    function generateLetterPool(lettersArray) {
+      const lettersPool = document.getElementById("lettersPool");
+      lettersPool.innerHTML = "";
+
+      scrambledLetters = lettersArray.map((char, id) => ({ id: id, char: char, used: false }));
+      shuffleArray(scrambledLetters);
+
+      scrambledLetters.forEach(item => {
+        const btn = document.createElement("button");
+        btn.className = "letter-btn";
+        btn.innerText = item.char.toUpperCase();
+        btn.id = `letter-btn-${item.id}`;
+        btn.onclick = () => handleLetterClick(item);
+        lettersPool.appendChild(btn);
+      });
+    }
+
+    function handleLetterClick(letterItem) {
+      if (isProcessing || letterItem.used) return;
+
+      const nextSlot = targetSlots.find(s => !s.filled && !s.isSymbol);
+      if (!nextSlot) return;
+
+      const btnElement = document.getElementById(`letter-btn-${letterItem.id}`);
+      
+      if (letterItem.char === nextSlot.char) {
+        // BETUL -> HIJAU
+        soundCorrect();
+        letterItem.used = true;
+        btnElement.classList.add("disabled");
+
+        nextSlot.filled = true;
+        nextSlot.el.innerText = letterItem.char.toUpperCase();
+        nextSlot.el.classList.add("correct");
+
+        const allCompleted = targetSlots.every(s => s.filled || s.isSymbol);
+        if (allCompleted) {
+          isProcessing = true;
+          document.getElementById("progressBar").style.width = `${((currentIndex + 1) / wordList.length) * 100}%`;
+          
+          setTimeout(() => {
+            soundWin();
+            launchConfetti();
+          }, 300);
+
+          setTimeout(() => {
+            currentIndex++;
+            loadWord(currentIndex);
+          }, 1500);
+        }
+      } else {
+        // SALAH -> OREN & kembali ke serakan
+        isProcessing = true;
+        soundWrong();
+        btnElement.classList.add("disabled");
+
+        nextSlot.el.innerText = letterItem.char.toUpperCase();
+        nextSlot.el.classList.add("wrong");
+
+        setTimeout(() => {
+          nextSlot.el.innerText = "";
+          nextSlot.el.classList.remove("wrong");
+          btnElement.classList.remove("disabled");
+          isProcessing = false;
+        }, 650);
+      }
+    }
+
+    function resetCurrentWord() {
+      if (isProcessing) return;
+      loadWord(currentIndex);
+    }
+
+    function showHint() {
+      if (!currentWordObj) return;
+      document.getElementById("hintText").innerText = currentWordObj.hint;
+      document.getElementById("hintModal").classList.add("active");
+    }
+
+    function closeHint() {
+      document.getElementById("hintModal").classList.remove("active");
+    }
+
+    function showFinishScreen() {
+      document.getElementById("playArea").style.display = "none";
+      document.getElementById("finishArea").style.display = "block";
+      soundWin();
+      launchConfetti();
+    }
+
+    function restartGame() {
+      document.getElementById("playArea").style.display = "block";
+      document.getElementById("finishArea").style.display = "none";
+      initGame();
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const pieces = [];
+      const colors = ['#FFE135', '#FF844B', '#55EFC4', '#FFB6C1', '#CBEBF6', '#E8D7F9'];
+
+      for (let i = 0; i < 70; i++) {
+        pieces.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2 + 50,
+          w: Math.random() * 10 + 6,
+          h: Math.random() * 10 + 6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 14,
+          vy: (Math.random() - 0.7) * 16,
+          gravity: 0.35,
+          opacity: 1
+        });
+      }
+
+      let animId;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let activeCount = 0;
+
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += p.gravity;
+          p.opacity -= 0.015;
+
+          if (p.opacity > 0) {
+            activeCount++;
+            ctx.save();
+            ctx.globalAlpha = p.opacity;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.w, p.h);
+            ctx.restore();
+          }
+        });
+
+        if (activeCount > 0) {
+          animId = requestAnimationFrame(animate);
+        } else {
+          cancelAnimationFrame(animId);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      animate();
+    }
+
+    window.onload = initGame;
+  </script>
+</body>
+</html>
